@@ -1,0 +1,12 @@
+{
+  "name": "weekly-menu",
+  "displayName": "weekly-menu",
+  "expo": {
+    "name": "weekly-menu",
+    "slug": "weekly-menu",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
