@@ -24,7 +24,7 @@ export default function Navigation() {
         }
 
         // You can return any component that you like here!
-        return <Icon name={iconName} color={focused ? Colors.ACCENT : Colors.SECONDARY}  group="essential" />;
+        return <Icon name={iconName} color={focused ? Colors.ACCENT : Colors.SECONDARY} height="25" width="25"  group="essential" />;
       },
     })}
     tabBarOptions={{
