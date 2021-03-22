@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 import { Title, SubTitle } from "../components/Text";
 import { Cards } from "../components/Card";
+import Button from "../components/Button";
 
 export default function HomeScreen() {
   return (
@@ -20,6 +21,7 @@ export default function HomeScreen() {
         title='Agregar platillo al menú'
         content='Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
       />
+      <Button text="Iniciar"/>
     </View>
   );
 }
