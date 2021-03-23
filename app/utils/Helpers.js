@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Storage } from "../constants/Storage";
+import {getUsers} from '../utils/api/firebaseConfig'
 export const storeData = async (key, value) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
-    console.log("stored")
+    console.log("stored");
   } catch (e) {
     // saving error
     console.error(e);
@@ -17,7 +18,7 @@ export const getData = async (key) => {
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // error reading value
-    console.error(e);
+    console.error("Error fetching data",e);
   }
 };
 
@@ -60,6 +61,18 @@ export function randomCreator(foodlist) {
   return weekMenu;
 }
 
-function randomFactor(len){
-    return Math.floor(Math.random() * len);
+function randomFactor(len) {
+  return Math.floor(Math.random() * len);
+}
+
+export function getTodayNumber(){
+  return new Date().getDay() -1;
+}
+
+export async function getTodayMenu() {
+  await getUsers();
+  const today = getTodayNumber();
+  let menu = await getData(Storage.WEEK_MENU)
+  menu = menu[today]
+  return menu[daysOfWeek[today]];
 }

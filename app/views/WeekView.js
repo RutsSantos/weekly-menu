@@ -4,7 +4,8 @@ import Icon from "react-native-ico";
 import Colors from "../constants/Colors";
 import { Title, SubTitle, ContentText } from "../components/Text";
 import ArrowBack from "../components/ArrowBack";
-import { DayMealItem } from "../components/DayMealItem";
+import { DayMeal } from "../components/DayMeal";
+
 import { daysOfWeek, getData } from "../utils/Helpers";
 
 function ColorCodeItem({ text, color }) {
@@ -33,15 +34,6 @@ function ColorCode() {
       <ColorCodeItem text='Desayuno' color={Colors.PURPLE} />
       <ColorCodeItem text='Almuerzo' color={Colors.CIAN} />
       <ColorCodeItem text='Cena' color={Colors.YELLOW} />
-    </View>
-  );
-}
-function DayMeal({ dayFoodList }) {
-  return (
-    <View style={{ marginVertical: 25 }}>
-      <DayMealItem color={Colors.PURPLE} text={dayFoodList.breakfast.name} />
-      <DayMealItem color={Colors.CIAN} text={dayFoodList.lunch.name} />
-      <DayMealItem color={Colors.YELLOW} text={dayFoodList.dinner.name} />
     </View>
   );
 }

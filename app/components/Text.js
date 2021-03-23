@@ -6,16 +6,20 @@ export function Title({ text }) {
   return <Text style={styles.title}>{text}</Text>;
 }
 
-export function SubTitle({ text, size }) {
-  return <Text style={[styles.subtitle, {fontSize: size}]}>{text}</Text>;
+export function SubTitle({ text, size = 22, color = Colors.PRIMARY }) {
+  return (
+    <Text style={[styles.subtitle, { fontSize: size, color, color }]}>
+      {text}
+    </Text>
+  );
 }
 
-export function ContentText({ text, color }) {
-  return <Text style={[styles.text, {color: color}]}>{text}</Text>;
+export function ContentText({ text, color = Colors.SECONDARY }) {
+  return <Text style={[styles.text, { color: color }]}>{text}</Text>;
 }
 
 export function CardTitle({ text, color }) {
-  return <Text style={[styles.CardTitle, {color: color}]}>{text}</Text>;
+  return <Text style={[styles.CardTitle, { color: color }]}>{text}</Text>;
 }
 
 const styles = StyleSheet.create({
@@ -41,6 +45,6 @@ const styles = StyleSheet.create({
     color: Colors.PRIMARY,
     fontSize: 18,
     marginVertical: 8,
-    marginHorizontal: 5
-  }
+    marginHorizontal: 5,
+  },
 });

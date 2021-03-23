@@ -1,10 +1,13 @@
 import firestore from "@react-native-firebase/firestore";
 import {randomCreator, storeData} from '../Helpers';
+import {Storage} from '../../constants/Storage';
 
-export function addFoodItem(food, addComplete) {
-  const ref = firestore().collection("todos");
-
-  return null;
+export async function getUsers (){
+  var users = [];
+  await firestoreRequest("users", users).then((data)=>{
+    data !=null && storeData(Storage.USERS, data);
+  });
+  return users;
 }
 
 export async function getFoodItem() {
@@ -27,6 +30,6 @@ async function firestoreRequest(collection, array, foodList) {
         array.push(doc.data());
       });
     });
-  foodList.push({ [collection]: array });
+  foodList && foodList.push({ [collection]: array });
   return array;
 }
