@@ -43,16 +43,23 @@ export const daysOfWeek = [
 
 export function randomCreator(foodlist) {
   const weekMenu = [];
+  const breakfastLength = foodlist[0].desayunos.length;
+  const lunchLength = foodlist[1].almuerzos.length;
+  const dinnerLength = foodlist[2].cenas.length;
 
   daysOfWeek.map((day) => {
     const n = foodlist[0].desayunos.length;
     const rand = Math.floor(Math.random() * n);
     let newObject = {
-      breakfast: foodlist[0].desayunos[rand],
-      lunch: foodlist[1].almuerzos[rand],
-      dinner: foodlist[2].cenas[rand],
+      breakfast: foodlist[0].desayunos[randomFactor(breakfastLength)],
+      lunch: foodlist[1].almuerzos[randomFactor(lunchLength)],
+      dinner: foodlist[2].cenas[randomFactor(dinnerLength)],
     };
     weekMenu.push({ [day]: newObject });
   });
   return weekMenu;
+}
+
+function randomFactor(len){
+    return Math.floor(Math.random() * len);
 }
