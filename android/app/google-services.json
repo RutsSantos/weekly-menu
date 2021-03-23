@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "105625822192",
+    "project_id": "easymeal-e1d49",
+    "storage_bucket": "easymeal-e1d49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105625822192:android:f21275a2b416173326b335",
+        "android_client_info": {
+          "package_name": "com.weeklymenu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105625822192-6ljhtn1dbt6lgtoqg79sbf42p2ij87np.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSCAhn1KruZusjmno24PLxHSPb9VFfzKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105625822192-6ljhtn1dbt6lgtoqg79sbf42p2ij87np.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "105625822192-vn64d1o8shg63bu9pdqhfnrcm67e8gdf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.name.weeklymenu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
