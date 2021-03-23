@@ -2,11 +2,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from "react";
 import Icon from 'react-native-ico';
 
-import HomeScreen from '../views/Home';
-import NewMenu from '../views/NewMenu';
-import Profile from '../views/Profile';
-
-import Colors from '../constants/Colors';
+import HomeScreen from '../../views/Home';
+import NewMenu from '../../views/NewMenu';
+import Profile from '../../views/Profile';
+import HomeStack from './HomeStack';
+import Colors from '../../constants/Colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +33,7 @@ export default function Navigation() {
       showLabel: false,
       style: [{height: 90}]
     }}>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="New" component={NewMenu} />
       <Tab.Screen name="Profile" component={Profile} />
 

@@ -6,8 +6,8 @@ export function Title({ text }) {
   return <Text style={styles.title}>{text}</Text>;
 }
 
-export function SubTitle({ text }) {
-  return <Text style={styles.subtitle}>{text}</Text>;
+export function SubTitle({ text, size }) {
+  return <Text style={[styles.subtitle, {fontSize: size}]}>{text}</Text>;
 }
 
 export function ContentText({ text, color }) {
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   subtitle: {
-    fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Medium",
     color: Colors.PRIMARY,
     fontSize: 22,
   },
