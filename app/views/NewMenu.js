@@ -3,6 +3,7 @@ import { Image, View, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 import { Title, ContentText } from "../components/Text";
 import Button from "../components/Button";
+import { getFoodItem } from "../utils/api/firebaseConfig";
 
 export default function NewMenu() {
   return (
@@ -18,7 +19,7 @@ export default function NewMenu() {
         <Title text="Generar nuevo menú" />
         <ContentText text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero aliquet tincidunt nunc dui, lacus eu sed turpis." />
         <View style={{marginTop: "25%"}}>
-            <Button text="Iniciar" />
+            <Button text="Iniciar" onClick={()=>getFoodItem()}/>
         </View>
       </View>
     </View>

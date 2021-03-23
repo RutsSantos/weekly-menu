@@ -1,64 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import Icon from "react-native-ico";
 import Colors from "../constants/Colors";
 import { Title, SubTitle, ContentText } from "../components/Text";
-import Button from "../components/Button";
 import ArrowBack from "../components/ArrowBack";
 import { DayMealItem } from "../components/DayMealItem";
-import { Row } from "native-base";
+import { daysOfWeek, getData } from "../utils/Helpers";
 
-const daysOfWeek = [
-  "Lunes",
-  "Martes",
-  "Miércoles",
-  "Jueves",
-  "Viernes",
-  "Sábado",
-  "Domingo",
-];
-
-function ColorCodeItem( {text, color}) {
-    return (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon
-          name='filled-circle'
-          color={color}
-          height='12'
-          group='material-design'
-        />
-        <ContentText text={text} />
-      </View>
-    )
-}
-function ColorCode() {
+function ColorCodeItem({ text, color }) {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginVertical: 20, marginRight: 25 }}>
-      <ColorCodeItem text="Desayuno" color={Colors.PURPLE} />
-      <ColorCodeItem text="Almuerzo" color={Colors.CIAN} />
-      <ColorCodeItem text="Cena" color={Colors.YELLOW} />
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <Icon
+        name='filled-circle'
+        color={color}
+        height='12'
+        group='material-design'
+      />
+      <ContentText text={text} />
     </View>
   );
 }
-function DayMeal() {
+function ColorCode() {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginVertical: 20,
+        marginRight: 25,
+      }}>
+      <ColorCodeItem text='Desayuno' color={Colors.PURPLE} />
+      <ColorCodeItem text='Almuerzo' color={Colors.CIAN} />
+      <ColorCodeItem text='Cena' color={Colors.YELLOW} />
+    </View>
+  );
+}
+function DayMeal({ dayFoodList }) {
   return (
     <View style={{ marginVertical: 25 }}>
-      <DayMealItem
-        color={Colors.PURPLE}
-        text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-      />
-      <DayMealItem
-        color={Colors.CIAN}
-        text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-      />
-      <DayMealItem
-        color={Colors.YELLOW}
-        text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-      />
+      <DayMealItem color={Colors.PURPLE} text={dayFoodList.breakfast.name} />
+      <DayMealItem color={Colors.CIAN} text={dayFoodList.lunch.name} />
+      <DayMealItem color={Colors.YELLOW} text={dayFoodList.dinner.name} />
     </View>
   );
 }
 export default function WeekView({ navigation }) {
+  const [foodList, setFoodList] = useState([]);
+  let [month, day, year] = new Date().toLocaleDateString("en-US").split("/");
+  const dateRangeLow = day - (new Date().getDay() - new Date().getDay() + 1);
+  const dateRangeHigh = dateRangeLow + 6; //Gotta fix this
+
+  useEffect(() => {
+    getData("WEEK_MENU").then((list) => {
+      setFoodList(list);
+    });
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -66,16 +63,21 @@ export default function WeekView({ navigation }) {
           <ArrowBack navigation={navigation} />
 
           <View style={{ marginTop: 30 }}></View>
-          <SubTitle text='21/03 - 30/03' size={21} />
+          <SubTitle
+            text={`${dateRangeLow}/${month} - ${dateRangeHigh}/${month}`}
+            size={21}
+          />
           <Title text='Menú de la semana' />
           <ContentText text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero aliquet tincidunt nunc dui, lacus eu sed turpis.' />
           <ColorCode />
-          {daysOfWeek.map((day) => (
-            <View>
-              <SubTitle text={day} size={18} />
-              <DayMeal />
-            </View>
-          ))}
+          {foodList
+            ? foodList.map((day, index) => (
+                <View key={index}>
+                  <SubTitle text={daysOfWeek[index]} size={18} />
+                  <DayMeal dayFoodList={day[daysOfWeek[index]]} />
+                </View>
+              ))
+            : null}
         </View>
       </ScrollView>
     </SafeAreaView>
