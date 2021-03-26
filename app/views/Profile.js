@@ -1,11 +1,24 @@
-import React from "react";
-import { Image, View, StyleSheet } from "react-native";
+import React, {useEffect, useState} from "react";
+import { View, StyleSheet } from "react-native";
 import { Thumbnail } from "native-base";
 import Colors from "../constants/Colors";
 import { Title, SubTitle, ContentText } from "../components/Text";
 import Button from "../components/Button";
+import {
+  getTodayMenu,
+  daysOfWeek,
+  getTodayNumber,
+  getData,
+} from "../utils/Helpers";
+import {Storage} from "../constants/Storage";
 
 export default function Profile() {
+  const [user, setUser] = useState({})
+  useEffect(()=>{
+    getData(Storage.USER).then((user)=>{
+      setUser(user);
+    })
+  },[])
   return (
     <View style={styles.container}>
       <View style={{ width: "60%" }}>
@@ -22,12 +35,12 @@ export default function Profile() {
           source={require("../assets/img/salad.jpg")}
         />
         <View style={styles.margin}>
-          <SubTitle text='John Doe' />
+          <SubTitle text={user.name} />
           <View style={styles.margin}>
             <ContentText text='Correo:' />
-            <ContentText text='John_Doe@gmail.com' />
+            <ContentText text={user.email} />
             <ContentText text='Miembro desde:' />
-            <ContentText text='21/03/2021' />
+            <ContentText text={user.name} />
           </View>
 
           <View style={styles.margin}>

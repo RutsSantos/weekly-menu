@@ -1,11 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Storage } from "../constants/Storage";
-import {getUsers} from '../utils/api/firebaseConfig'
+
 export const storeData = async (key, value) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
-    console.log("stored");
   } catch (e) {
     // saving error
     console.error(e);
@@ -28,8 +27,6 @@ export const removeValue = async (key) => {
   } catch (e) {
     // remove error
   }
-
-  console.log("Done.");
 };
 
 export const daysOfWeek = [
@@ -70,7 +67,6 @@ export function getTodayNumber(){
 }
 
 export async function getTodayMenu() {
-  await getUsers();
   const today = getTodayNumber();
   let menu = await getData(Storage.WEEK_MENU)
   menu = menu[today]

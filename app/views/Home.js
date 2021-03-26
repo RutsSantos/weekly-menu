@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Colors from "../constants/Colors";
+import {Storage} from "../constants/Storage";
 import { Title, SubTitle } from "../components/Text";
 import { Cards } from "../components/Card";
 import ActionButton from "../components/ActionButton";
@@ -24,9 +25,9 @@ export default function HomeScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [todayMenu, setTodayMenu] = useState([]);
   const [name, setName] = useState("");
-  useEffect(() => {
-    getData("USERS").then((data) => setName(data[0].name));
-  }, []);
+  useEffect(()=>{
+    getData(Storage.USER).then((data)=>setName(data.name));
+  },[])
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
@@ -68,7 +69,7 @@ export default function HomeScreen({ navigation }) {
             </View>
           </View>
         </Modal>
-        <SubTitle text='Buen día' color={Colors.ACCENT} size={22} />
+        <SubTitle text='Welcome back!' color={Colors.ACCENT} size={22} />
         <Title text={name} />
         <View
           style={{

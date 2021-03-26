@@ -3,7 +3,7 @@ import { Image, View, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 import { Title, ContentText } from "../components/Text";
 import Button from "../components/Button";
-import { getFoodItem } from "../utils/api/firebaseConfig";
+import { getFoodItem, addUserMenu, getUsers, addUser } from "../utils/api/firebaseConfig";
 
 export default function NewMenu() {
   return (
