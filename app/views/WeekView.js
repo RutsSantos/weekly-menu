@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import Icon from "react-native-ico";
+import moment from "moment";
 import Colors from "../constants/Colors";
 import { Title, SubTitle, ContentText } from "../components/Text";
 import ArrowBack from "../components/ArrowBack";
@@ -39,15 +40,16 @@ function ColorCode() {
 }
 export default function WeekView({ navigation }) {
   const [foodList, setFoodList] = useState([]);
-  let [month, day, year] = new Date().toLocaleDateString("en-US").split("/");
-  const dateRangeLow = day - (new Date().getDay() - new Date().getDay() + 1);
-  const dateRangeHigh = dateRangeLow + 6; //Gotta fix this
-
+  const monday = moment().subtract(new Date().getDay(), "d").add(1, "d");
+  const sunday = moment(monday).add(6, "d");
+  const today = new Date();
+  console.log(today >= sunday);
   useEffect(() => {
     getData("WEEK_MENU").then((list) => {
       setFoodList(list);
     });
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -56,11 +58,15 @@ export default function WeekView({ navigation }) {
 
           <View style={{ marginTop: 30 }}></View>
           <SubTitle
-            text={`${dateRangeLow}/${month} - ${dateRangeHigh}/${month}`}
+            text={`${monday.format("DD/MM")} - ${sunday.format("DD/MM")}`}
             size={21}
           />
           <Title text='Menú de la semana' />
-          <ContentText text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero aliquet tincidunt nunc dui, lacus eu sed turpis.' />
+          {today > sunday ? (
+            <ContentText text='¡Oh vaya! Ya es tiempo de generar un nuevo menú, este pertenece a la semana pasada.' />
+          ) : (
+            <ContentText text='A continuación las comidas para esta semana, Recuerda revisar tu despensa para confirmar que tengas todos los ingredientes que necesitas, también están detallados en la opción de "Comprar" en la página de inicio.'  />
+          )}
           <ColorCode />
           {foodList
             ? foodList.map((day, index) => (

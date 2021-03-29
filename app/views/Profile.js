@@ -1,24 +1,38 @@
 import React, {useEffect, useState} from "react";
 import { View, StyleSheet } from "react-native";
 import { Thumbnail } from "native-base";
+import { CommonActions } from '@react-navigation/native';
 import Colors from "../constants/Colors";
 import { Title, SubTitle, ContentText } from "../components/Text";
 import Button from "../components/Button";
 import {
-  getTodayMenu,
-  daysOfWeek,
-  getTodayNumber,
+  removeValue,
   getData,
 } from "../utils/Helpers";
 import {Storage} from "../constants/Storage";
 
-export default function Profile() {
+export default function Profile({navigation}) {
   const [user, setUser] = useState({})
   useEffect(()=>{
     getData(Storage.USER).then((user)=>{
       setUser(user);
     })
-  },[])
+  },[]);
+
+  const closeSession = ()=>{
+    removeValue(Storage.USER)
+    .then(()=>{
+      console.warn("Sesion cerrada")
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            { name: 'Login' }
+          ],
+        })
+      );
+    })
+  }
   return (
     <View style={styles.container}>
       <View style={{ width: "60%" }}>
@@ -44,7 +58,7 @@ export default function Profile() {
           </View>
 
           <View style={styles.margin}>
-            <Button text='Cerrar sesión' outlined />
+            <Button text='Cerrar sesión' outlined onClick={()=> closeSession()} />
             <ContentText text='Cambiar contraseña' color={Colors.PRIMARY} />
           </View>
         </View>
