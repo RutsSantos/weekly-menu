@@ -12,7 +12,7 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    getUsers().then(() => console.info("users!"));
+    getUsers().then(() => console.log("users!"));
   }, []);
 
   const onSubmit = (username, password) => {

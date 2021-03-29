@@ -6,6 +6,7 @@ import Colors from "../constants/Colors";
 import { Title, SubTitle, ContentText } from "../components/Text";
 import ArrowBack from "../components/ArrowBack";
 import { DayMeal } from "../components/DayMeal";
+import {Storage} from "../constants/Storage";
 
 import { daysOfWeek, getData } from "../utils/Helpers";
 
@@ -43,9 +44,8 @@ export default function WeekView({ navigation }) {
   const monday = moment().subtract(new Date().getDay(), "d").add(1, "d");
   const sunday = moment(monday).add(6, "d");
   const today = new Date();
-  console.log(today >= sunday);
   useEffect(() => {
-    getData("WEEK_MENU").then((list) => {
+    getData(Storage.WEEK_MENU).then((list) => {
       setFoodList(list);
     });
   }, []);

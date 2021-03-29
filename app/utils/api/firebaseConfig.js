@@ -1,5 +1,10 @@
 import firestore from "@react-native-firebase/firestore";
-import { randomCreator, storeData, getData, createShoppingList } from "../Helpers";
+import {
+  randomCreator,
+  storeData,
+  getData,
+  createShoppingList,
+} from "../Helpers";
 import { Storage } from "../../constants/Storage";
 
 export function addUser(user) {
@@ -21,6 +26,14 @@ export function authenticateUser(userId, password, navigation) {
   getData(Storage.USERS).then((data) => {
     data.forEach((elem) => {
       if (elem.email === userId && elem.password === password) {
+        elem.week_menu &&
+          storeData(Storage.WEEK_MENU, elem.week_menu).then(() =>
+            console.log("Semana agregada desde firebase"),
+          );
+        elem.shopping_list &&
+          storeData(Storage.SHOPPING, elem.shopping_list).then(() =>
+            console.log("Shopping List agregado desde firebase"),
+          );
         storeData(Storage.USER, elem).then(() =>
           navigation.navigate("AppHome"),
         );
@@ -49,21 +62,23 @@ export async function getFoodItem() {
   const week = randomCreator(foodlist);
   await storeData(Storage.WEEK_MENU, week);
   const user = await getData(Storage.USER);
-  addUserMenu(user.email, week);
-  await storeData(Storage.SHOPPING ,createShoppingList(week));
+  const shopping = createShoppingList(week);
+  await storeData(Storage.SHOPPING, shopping);
+  addUserMenu(user.email, week, shopping);
   return week;
 }
 
-export function addUserMenu(userId, menu) {
+export function addUserMenu(userId, menu, shopping) {
   // Updates a given user and adds it's semanal menu
   firestore()
     .collection("users")
     .doc(userId)
     .update({
       week_menu: menu,
+      shopping_list: shopping,
     })
     .then(() => {
-      console.info("Updated!");
+      console.info("Menu Updated!");
     });
 }
 
@@ -73,7 +88,6 @@ async function firestoreRequest(collection, array, foodList) {
     .get()
     .then((documentSnapshot) => {
       documentSnapshot.forEach((doc) => {
-        // collection ==="cenas" && console.log(doc.data().ingredients)
         array.push(doc.data());
       });
     });
@@ -81,3 +95,14 @@ async function firestoreRequest(collection, array, foodList) {
   return array;
 }
 
+export async function updateShoppingList(list) {
+  const user = await getData(Storage.USER).then((usr) => {
+    return usr;
+  });
+  await firestore()
+    .collection("users")
+    .doc(user.email)
+    .update({
+      shopping_list: list,
+    });
+}

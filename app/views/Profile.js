@@ -6,7 +6,7 @@ import Colors from "../constants/Colors";
 import { Title, SubTitle, ContentText } from "../components/Text";
 import Button from "../components/Button";
 import {
-  removeValue,
+  clearAll,
   getData,
 } from "../utils/Helpers";
 import {Storage} from "../constants/Storage";
@@ -20,9 +20,8 @@ export default function Profile({navigation}) {
   },[]);
 
   const closeSession = ()=>{
-    removeValue(Storage.USER)
+    clearAll()
     .then(()=>{
-      console.warn("Sesion cerrada")
       navigation.dispatch(
         CommonActions.reset({
           index: 0,

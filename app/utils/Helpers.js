@@ -29,6 +29,16 @@ export const removeValue = async (key) => {
   }
 };
 
+export const clearAll = async () => {
+  try {
+    await AsyncStorage.clear();
+  } catch (e) {
+    // clear error
+  }
+
+  console.log("Done.");
+};
+
 export const daysOfWeek = [
   "Lunes",
   "Martes",
@@ -90,13 +100,10 @@ export function createShoppingList(week) {
   elements.forEach((x) => {
     count[x] = (count[x] || 0) + 1;
   });
-  const eso = Object.entries(count)
-  let newArray = [];
-  eso.map((elem)=>{
-    console.log(elem)
-    elem.push({checked: false})
-    newArray.push(elem)
-  })
-  console.log(newArray)
-  return newArray;
+  let bigArray = [];
+  for (const el of Object.entries(count)) {
+    bigArray.push({ item: el[0], quant: el[1], checked: false });
+  }
+
+  return bigArray;
 }

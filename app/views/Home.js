@@ -102,7 +102,7 @@ export default function HomeScreen({ navigation }) {
         <Cards
           iconName='idea'
           title='Tip:'
-          content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium eros et nulla tempor, sed rhoncus massa pharetra.'
+          content='Verifica con antelación el menú del día, para que puedas preparar a tiempom tus alimentos'
         />
         <Cards
           background={Colors.PRIMARY}

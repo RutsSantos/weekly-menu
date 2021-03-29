@@ -6,6 +6,8 @@ import Colors from "../constants/Colors";
 import { Title, ContentText } from "../components/Text";
 import ArrowBack from "../components/ArrowBack";
 import { getData, storeData } from "../utils/Helpers";
+import { updateShoppingList } from "../utils/api/firebaseConfig";
+
 import { Storage } from "../constants/Storage";
 
 export default function ShoppingList({ navigation }) {
@@ -13,16 +15,20 @@ export default function ShoppingList({ navigation }) {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
+    navigation.addListener('blur', () => {
+      updateShoppingList(shoppingList).then(()=>{});
+    });
+
     getData(Storage.SHOPPING).then((data) => {
       setShoppingList(data);
     });
-  }, [checked]);
+  }, [checked, navigation]);
 
   const handleCheck = async (id) => {
     let newShoppingList = [];
     shoppingList.map((elem) => {
-      if (elem[0] === id) {
-        elem[2].checked = !elem[2].checked;
+      if (elem.item === id) {
+        elem.checked = !elem.checked;
       }
       newShoppingList.push(elem);
     });
@@ -38,20 +44,20 @@ export default function ShoppingList({ navigation }) {
           <ContentText text='La siguiente lista consta de los alimentos que debes tener a mano para preparar el menú de esta semana. - El número que está a la derecha es la cantidad de veces que se utiliza el ingrediente durante la semana.' />
           <View style={{ marginTop: "5%" }}>
             {shoppingList.map((elem) => (
-              <ListItem key={elem[0]}>
+              <ListItem key={elem.item}>
                 <Left  style={{alignItems: "center"}}>
                   <CheckBox
-                    checked={elem[2].checked}
-                    onPress={async () => await handleCheck(elem[0])}
+                    checked={elem.checked}
+                    onPress={async () => await handleCheck(elem.item)}
                     color={Colors.PRIMARY}
                   />
                   <View style={{ marginLeft: 25 }}>
-                    <ContentText text={elem[0].charAt(0).toUpperCase() + elem[0].slice(1)} />
+                    <ContentText text={elem.item.charAt(0).toUpperCase() + elem.item.slice(1)} />
                   </View>
                 </Left>
 
                 <View>
-                  <ContentText text={elem[1]} />
+                  <ContentText text={elem.quant} />
                 </View>
               </ListItem>
             ))}
