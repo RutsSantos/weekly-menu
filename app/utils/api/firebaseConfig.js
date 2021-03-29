@@ -1,5 +1,5 @@
 import firestore from "@react-native-firebase/firestore";
-import { randomCreator, storeData, getData } from "../Helpers";
+import { randomCreator, storeData, getData, createShoppingList } from "../Helpers";
 import { Storage } from "../../constants/Storage";
 
 export function addUser(user) {
@@ -17,10 +17,13 @@ export function addUser(user) {
 }
 
 export function authenticateUser(userId, password, navigation) {
+  //Authenticate the user on Login
   getData(Storage.USERS).then((data) => {
     data.forEach((elem) => {
       if (elem.email === userId && elem.password === password) {
-        storeData(Storage.USER, elem).then(()=>navigation.navigate("AppHome"));
+        storeData(Storage.USER, elem).then(() =>
+          navigation.navigate("AppHome"),
+        );
         return true;
       }
     });
@@ -47,6 +50,7 @@ export async function getFoodItem() {
   await storeData(Storage.WEEK_MENU, week);
   const user = await getData(Storage.USER);
   addUserMenu(user.email, week);
+  await storeData(Storage.SHOPPING ,createShoppingList(week));
   return week;
 }
 
@@ -69,9 +73,11 @@ async function firestoreRequest(collection, array, foodList) {
     .get()
     .then((documentSnapshot) => {
       documentSnapshot.forEach((doc) => {
+        // collection ==="cenas" && console.log(doc.data().ingredients)
         array.push(doc.data());
       });
     });
   foodList && foodList.push({ [collection]: array });
   return array;
 }
+

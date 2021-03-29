@@ -17,7 +17,7 @@ export const getData = async (key) => {
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // error reading value
-    console.error("Error fetching data",e);
+    console.error("Error fetching data", e);
   }
 };
 
@@ -62,13 +62,41 @@ function randomFactor(len) {
   return Math.floor(Math.random() * len);
 }
 
-export function getTodayNumber(){
-  return new Date().getDay() -1;
+export function getTodayNumber() {
+  return new Date().getDay() - 1;
 }
 
 export async function getTodayMenu() {
   const today = getTodayNumber();
-  let menu = await getData(Storage.WEEK_MENU)
-  menu = menu[today]
+  let menu = await getData(Storage.WEEK_MENU);
+  menu = menu[today];
   return menu[daysOfWeek[today]];
+}
+
+export function createShoppingList(week) {
+  const elements = [];
+  let count = {};
+  week.map((day, key) => {
+    let d = daysOfWeek[key];
+    Object.entries(day[d]).map((item) => {
+      if (item[1].ingredients != undefined) {
+        item[1].ingredients.forEach((ingredient) => {
+          elements.push(ingredient);
+        });
+      }
+    });
+  });
+
+  elements.forEach((x) => {
+    count[x] = (count[x] || 0) + 1;
+  });
+  const eso = Object.entries(count)
+  let newArray = [];
+  eso.map((elem)=>{
+    console.log(elem)
+    elem.push({checked: false})
+    newArray.push(elem)
+  })
+  console.log(newArray)
+  return newArray;
 }

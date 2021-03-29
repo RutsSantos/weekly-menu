@@ -108,7 +108,7 @@ export default function HomeScreen({ navigation }) {
           background={Colors.PRIMARY}
           color={Colors.WHITE}
           title='Agregar platillo al menú'
-          content='Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          content='Por el momento esta es una opción deshabilitada.'
         />
       </ScrollView>
     </SafeAreaView>

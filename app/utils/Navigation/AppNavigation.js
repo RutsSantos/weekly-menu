@@ -14,7 +14,6 @@ export default function AppNavigation() {
       data != null ? setInitialRoute("AppHome") : setInitialRoute("Login");
     });
   }, []);
-  console.info(initialRoute);
   return (
     <>
       {initialRoute && (

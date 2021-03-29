@@ -59,7 +59,7 @@ export default function Profile({navigation}) {
 
           <View style={styles.margin}>
             <Button text='Cerrar sesión' outlined onClick={()=> closeSession()} />
-            <ContentText text='Cambiar contraseña' color={Colors.PRIMARY} />
+            {/* <ContentText text='Cambiar contraseña' color={Colors.PRIMARY} /> */}
           </View>
         </View>
       </View>
